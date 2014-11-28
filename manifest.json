@@ -1,0 +1,27 @@
+{
+  "name": "Deferred Tab",
+  "description": "Open new tab without loading its content.",
+  "omnibox": {
+    "keyword": "deferred-tab"
+          },
+  "icons": {
+    "16": "icon.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "version": "1.0",
+  "minimum_chrome_version": "9",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+          "matches": ["<all_urls>"],
+          "js": ["content.js"]
+    }
+  ],
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "<all_urls>"
+  ]
+}
