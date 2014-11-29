@@ -1,8 +1,8 @@
 {
-  "name": "Deferred Tab",
+  "name": "Sleepy Tab",
   "description": "Open new tab without loading its content.",
   "omnibox": {
-    "keyword": "deferred-tab"
+    "keyword": "sleepy-tab"
           },
   "icons": {
     "16": "icon.png"
