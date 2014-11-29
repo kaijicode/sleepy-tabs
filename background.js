@@ -1,7 +1,7 @@
 console.log('background.js');
 
 var targetUrl = "";
-var deferredTabs = [];
+var sleepyTabs = [];
 
 function handleNewTab(tab) {
     chrome.tabs.executeScript(tab.id, {file: "tab.js"}, function(response) {
@@ -10,29 +10,29 @@ function handleNewTab(tab) {
             }
 
             chrome.tabs.sendMessage(tab.id, {message: "sleep" ,tabId: tab.id, url: targetUrl});
-            deferredTabs.push(tab.id);
+            sleepyTabs.push(tab.id);
     });
 };
 
-function createDeferredTab(info, tab) {
+function createSleepyTab(info, tab) {
     targetUrl = info.linkUrl;
     chrome.tabs.create({url: "file:///", active: false}, handleNewTab);
 };
 
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
-    if (deferredTabs.indexOf(activeInfo.tabId) >= 0) {
+    if (sleepyTabs.indexOf(activeInfo.tabId) >= 0) {
         console.log('sending active');
         chrome.tabs.sendMessage(activeInfo.tabId, {message: "active"});
     };
 
     if (chrome.runtime.lastError) {
-        console.error('deferred-tab: ', chrome.runtime.lastError.message);
+        console.error('sleepy-tab: ', chrome.runtime.lastError.message);
     }
 
 });
 
 var contextMenuItem = chrome.contextMenus.create({"title": "Open sleepy tab", "contexts": ["link"],
-    "onclick": createDeferredTab});
+    "onclick": createSleepyTab});
 
 
