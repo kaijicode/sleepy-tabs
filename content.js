@@ -13,7 +13,8 @@ document.addEventListener("mousedown", function(event) {
 // add listener for title event, when title needed - we supply it.
 chrome.runtime.onMessage.addListener(function(response, sender, sendResponse) {
     if (response.message == "get:title") {
-        sendResponse({'title': findTitle()});
+        var title = findTitle();
+        sendResponse({'title': title});
     }
 });
 
