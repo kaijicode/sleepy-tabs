@@ -3,7 +3,7 @@ console.log('content.js');
 // element user clicks on when opening new sleepy tab
 var targetElement = null;
 
-// we have to record each right click event
+// we have to record each last right click event
 document.addEventListener("mousedown", function(event) {
     if (event.button == 2) { 
         targetElement = event.target;
@@ -21,14 +21,16 @@ chrome.runtime.onMessage.addListener(function(response, sender, sendResponse) {
 // function "guesses" what title new tab should get
 // by looking at the clicking element.
 function findTitle() {
-    var title = "";
+    var title = "Sleepy Tab";
+
+    if (!targetElement) {
+        return title;
+    }
 
     if (targetElement.innerText) {
         title = targetElement.innerText;
     } else if (targetElement.alt) {
         title = targetElement.alt;
-    } else {
-        title = "Sleepy Tab";
     }
 
     return title;
